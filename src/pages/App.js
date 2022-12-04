@@ -22,9 +22,7 @@ function App() {
           then(arrayRepo => {
             setQtdRepositories(arrayRepo.data.length);
 
-            const listRepo = document.querySelector('.list-group');
             arrayRepo.data.forEach(e => {
-              const itemRepoTag = document.createElement('div');
               const itemRepoContent = e.name;
 
               console.log(itemRepoContent);
