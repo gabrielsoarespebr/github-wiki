@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Container, Button, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Container, Button, Form, ListGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState } from 'react';
 
@@ -8,11 +8,13 @@ function App() {
 
   const [name, setName] = useState("Nome de usuário");
   const [photo, setPhoto] = useState("https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/github-512.png");
-  const [repository, setRepository] = useState("repositório");
   const [qtdRepositories, setQtdRepositories] = useState(0);
 
 
   const handleSearch = () => {
+    let listaRepoHtml = document.querySelector('#repositories');
+    listaRepoHtml.innerHTML = '';
+
     axios
       .get(`https://api.github.com/users/${userName}`).then(res => {
         setName(res.data.name);
@@ -24,6 +26,7 @@ function App() {
 
             arrayRepo.data.forEach(e => {
               const itemRepoContent = e.name;
+              listaRepoHtml.innerHTML += `<div class="list-group-item">${itemRepoContent}</div>`;
 
               console.log(itemRepoContent);
             });
@@ -49,15 +52,14 @@ function App() {
             </Form>
 
             <div className="content col-6">
-              <img className='border border-3 rounded-pill' width="70px" src={photo} alt="Foto de usuário" />
+              <img className='border border-3 rounded-pill' width="100px" src={photo} alt="Foto de usuário" />
               <p className='fs-6'>{name}</p>
             </div>
           </div>
 
           <div>
-            <h3>Quantidade de repositórios: {qtdRepositories}</h3>
+            <h3 className='mt-4'>Quantidade de repositórios: {qtdRepositories}</h3>
             <ListGroup id='repositories'>
-              <ListGroupItem>{repository}</ListGroupItem>
             </ListGroup>
           </div>
 
